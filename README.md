@@ -39,3 +39,66 @@ This project aims to improve **next-day maximum and minimum air temperature fore
 
 ---
 
+## 🚀 Project Workflow  
+1. **Exploratory Data Analysis (EDA) 📊**  
+   - Checked for missing values, outliers, and distributions  
+   - Correlation analysis to identify key features  
+
+2. **Data Preprocessing 🛠️**  
+   - Scaled numerical data  
+   - Handled missing values and feature engineering  
+
+3. **Multi-Output Regression Model Selection 🤖**  
+   - `DecisionTreeRegressor` 🌳  
+   - `RandomForestRegressor` 🌲  
+   - `KNeighborsRegressor` 🤝  
+   - `ExtraTreesRegressor` 🌿  
+
+4. **Performance Evaluation 📈**  
+   - **Adjusted R², MAE, RMSE**  
+   - **Cross-validation** to check overfitting  
+
+5. **Hyperparameter Tuning 🛠️**  
+   - Used **RandomizedSearchCV** to optimize the best model  
+
+6. **Model Deployment & Storage 💾**  
+   - **Saved the final model** using `joblib`  
+
+---
+
+## 📊 Model Performance Comparison  
+| Model                      | Adjusted R² | Cross Validation Score | Difference (Overfitting) |
+|----------------------------|------------|------------------------|---------------------------|
+| DecisionTreeRegressor      | **1.000**   | 0.1783                 | **99.82**                 |
+| RandomForestRegressor      | **0.983**   | 0.5380                 | **0.4448**                |
+| KNeighborsRegressor        | **0.890**   | 0.2516                 | **0.6387**                |
+| ExtraTreesRegressor        | **1.000**   | 0.5602                 | **99.44**                 |
+
+✅ **Selected Model**: `RandomForestRegressor` due to the best balance between **accuracy and generalization**.  
+
+---
+
+## 🔧 Hyperparameter Tuning Summary  
+
+To improve model performance, **RandomizedSearchCV** was used for hyperparameter tuning on **RandomForestRegressor**. The following parameters were considered:  
+
+- **criterion**: (`mse`, `mae`) - Defines the function to measure the quality of a split.  
+- **max_features**: (`auto`, `sqrt`, `log2`) - Determines the number of features to consider for the best split.  
+- **oob_score**: (`True`, `False`) - Enables out-of-bag estimates for generalization error.  
+- **random_state**: (`30`, `50`, `70`, `100`, `120`) - Controls randomness for reproducibility.  
+
+---
+
+### 🚀 Best Parameters Found  
+After running **10 iterations with 5-fold cross-validation**, the best combination was:  
+
+- **random_state**: `30`  
+- **oob_score**: `False`  
+- **max_features**: `sqrt`  
+- **criterion**: `mse`  
+
+---
+
+### 📊 Impact on Model  
+Despite tuning, the final model accuracy remained at **98.33%**, indicating that default parameters were already near-optimal. However, fine-tuning helped confirm model stability and reliability.  
+
